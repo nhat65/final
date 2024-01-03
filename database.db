@@ -1,0 +1,140 @@
+CREATE DATABASE IF NOT EXISTS travelWeb2
+CHARACTER set utf8 COLLATE utf8_unicode_ci 
+
+CREATE TABLE Users (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  roleId INT,
+  username VARCHAR(30) NOT NULL,
+  email VARCHAR(50) NOT NULL,
+  password TEXT NOT NULL,
+  pic TEXT,
+  firstName VARCHAR(100),
+  lastName VARCHAR(100),
+  gender INT,
+  createAt DATETIME,
+  updateAt DATETIME
+) ENGINE=InnoDB;
+
+CREATE TABLE Posts (
+  id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+  userId INT,
+  title VARCHAR(1000) NOT NULL,
+  description TEXT NOT NULL,
+  address TEXT NOT NULL,
+  cityId INT NOT NULL,
+  typeOfId INT NOT NULL,
+  priceId INT NOT NULL,
+  timesId INT NOT NULL,
+  image TEXT NOT NULL,
+  viewer INT,
+  liked INT,
+  added INT,
+  createAt DATETIME,
+  updateAt DATETIME
+) ENGINE=InnoDB;
+
+CREATE TABLE City (
+  id INT PRIMARY KEY NOT NULL ,
+  city VARCHAR(50) NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE TypeOf (
+  id INT PRIMARY KEY NOT NULL ,
+  typeOf VARCHAR(100) NOT NULL
+) ENGINE=InnoDB;
+
+CREATE TABLE Price (
+  id INT PRIMARY KEY NOT NULL ,
+  price1 DOUBLE NOT NULL,
+  price2 DOUBLE
+) ENGINE=InnoDB;
+
+CREATE TABLE Times (
+  id INT PRIMARY KEY NOT NULL ,
+  timeOpen TIME NOT NULL,
+  timeClose TIME 
+) ENGINE=InnoDB;
+
+CREATE TABLE Reviews (
+  id INT PRIMARY KEY NOT NULL ,
+  userId INT NOT NULL,
+  postId INT NOT NULL,
+  content TEXT NOT NULL,
+  createAt DATETIME
+) ENGINE=InnoDB;
+
+ALTER TABLE Posts
+ADD CONSTRAINT fk_user
+FOREIGN KEY (userID)
+REFERENCES Users(id);
+
+ALTER TABLE Reviews
+ADD CONSTRAINT fk_user_review
+FOREIGN KEY (userID)
+REFERENCES Users(id);
+
+ALTER TABLE Reviews
+ADD CONSTRAINT fk_post
+FOREIGN KEY (postId)
+REFERENCES Posts(id);
+
+ALTER TABLE Posts
+ADD CONSTRAINT fk_country
+FOREIGN KEY (cityId)
+REFERENCES City(id);
+
+ALTER TABLE Posts
+ADD CONSTRAINT fk_typeOf
+FOREIGN KEY (typeOFId)
+REFERENCES TypeOf(id);
+
+ALTER TABLE Posts
+ADD CONSTRAINT fk_price
+FOREIGN KEY (priceId)
+REFERENCES Price(id);
+
+ALTER TABLE Posts
+ADD CONSTRAINT fk_times
+FOREIGN KEY (timesId)
+REFERENCES Times(id);
+
+INSERT INTO typeof (id, typeOf) VALUES
+('1','Khách sạn'), ('2', 'Nhà hàng'), ('3', 'Quán ăn'), ('4', 'Coffee'), ('5', 'Khác')
+
+INSERT INTO City (id, city) VALUES
+(1, 'Hà Nội'), (2, 'Hồ Chí Minh'), (3, 'Đà Nẵng'), (4, 'Hải Phòng'),
+(5, 'Bắc Ninh'), (6, 'Hưng Yên'), (7, 'Nam Định'), (8, 'Thái Bình'),
+(9, 'Vĩnh Phúc'), (10, 'Hà Nam'), (11, 'Ninh Bình'), (12, 'Hà Giang'),
+(13, 'Cao Bằng'), (14, 'Lạng Sơn'), (15, 'Bắc Giang'), (16, 'Phú Thọ'),
+(17, 'Thái Nguyên'), (18, 'Yên Bái'), (19, 'Quảng Ninh'), (20, 'Hòa Bình'),
+(21, 'Sơn La'), (22, 'Điện Biên'), (23, 'Lai Châu'), (24, 'Lào Cai'),
+(25, 'Tuyên Quang'), (26, 'Hà Tĩnh'), (27, 'Nghệ An'), (28, 'Quảng Bình'),
+(29, 'Quảng Trị'), (30, 'Thừa Thiên Huế'), (31, 'Quảng Nam'), (32, 'Quảng Ngãi'),
+(33, 'Bình Định'), (34, 'Phú Yên'), (35, 'Khánh Hòa'), (36, 'Ninh Thuận'),
+(37, 'Bình Thuận'), (38, 'Kon Tum'), (39, 'Gia Lai'), (40, 'Đắk Lắk'),
+(41, 'Đắk Nông'), (42, 'Lâm Đồng'), (43, 'Bình Phước'), (44, 'Tây Ninh'),
+(45, 'Bình Dương'), (46, 'Đồng Nai'), (47, 'Bà Rịa - Vũng Tàu'), (48, 'Long An'),
+(49, 'Tiền Giang'), (50, 'Bến Tre'), (51, 'Trà Vinh'), (52, 'Vĩnh Long'),
+(53, 'Đồng Tháp'), (54, 'An Giang'), (55, 'Kiên Giang'), (56, 'Cần Thơ'),
+(57, 'Hậu Giang'), (58, 'Sóc Trăng'), (59, 'Bạc Liêu'), (60, 'Cà Mau'),
+(61, 'Đảo Phú Quốc'), (62, 'Ba Ria'), (63, 'Tây Nguyên');
+
+INSERT INTO `users` (`id`, `roleId`, `username`, `email`, `password`, `pic`, `firstName`, `lastName`, `gender`, `createAt`, `updateAt`) VALUES
+(1, NULL, 'nhat', 'abc@gmail.com', '123', NULL, 'Huy', 'Phan Ngọc Đăng', 0, NULL, NULL),
+(2, 0, 'nhat2004', 'nhat@gmail.com', 'nhat', NULL, 'Nhật', 'Phan Tấn', 0, NULL, NULL),
+(3, 0, 'long2004', 'long@gmail.com', 'long', NULL, 'Long', 'Hồ Ngọc Bảo', 0, NULL, NULL),
+(4, 0, 'vy2004', 'vy@gmail.com', 'vy', NULL, 'Vỹ', 'Nguyễn Đăng', 0, NULL, NULL);
+
+
+INSERT INTO `posts` (`id`, `userId`, `title`, `description`, `address`, `cityId`, `typeOfId`, `priceId`, `timesId`, `image`, `viewer`, `liked`, `added`, `createAt`, `updateAt`) 
+VALUES 
+(NULL, '1', 'Ruộng bậc thang', 'abc', 'mnb', '5', '2', '1', '1', 'ruongbacthang4k.png', NULL, NULL, NULL, NULL, NULL),
+(NULL, '1', 'Ha Long Bay', 'One of the most beautiful places in Vietnam with stunning limestone islands', 'Hạ Long, Quảng Ninh', '19', '5', '2', '3', 'halong1.png', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '2', 'Hoi An Ancient Town', 'A charming ancient town known for its well-preserved architecture and lantern-lit streets', 'Hội An, Quảng Nam', '31', '5', '3', '2', 'hoian.png', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '3', 'Sapa', 'Famous for its terraced rice fields and cultural diversity of ethnic minorities', 'Sa Pa, Lào Cai', '3', '5', '3', '1', 'sapa1.png', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '4', 'Quán Phở Bát Đàn', 'Nổi tiếng với phở bò và phở gà ngon tuyệt', '12 Bát Đàn, Hoàn Kiếm, Hà Nội', '1', '3', '2', '3', 'phobatdan.jpg', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '4', 'Lotte Hanoi Hotel', 'Khách sạn cao cấp với view đẹp, dịch vụ tốt', '54 Liễu Giai, Ba Đình, Hà Nội', '1', '1', '3', '2', 'lottehanoihotel.jpg', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '3', 'Nhà Hàng Ngon', 'Thực đơn đa dạng với các món ăn Việt Nam truyền thống', '18 Phan Bội Châu, Hoàn Kiếm, Hà Nội', '1', '2', '3', '1', 'nhahangngon.jpg', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '4', 'Quán Cà Phê Nha Trang Chill', 'Quán cà phê với view biển tuyệt vời', '101 Đường UVW, Quận XYZ, Nha Trang', '2', '4', '2', '4', 'nhatrang.png', NULL, NULL, NULL, NULL, NULL), 
+(NULL, '1', 'Resort Phú Quốc Paradise', 'Resort sang trọng tại đảo Phú Quốc', '18 Đường Phú Quốc, Huyện ABC, Phú Quốc', '61', '1', '4', '3', 'phuquoc.png', NULL, NULL, NULL, NULL, NULL);
+
